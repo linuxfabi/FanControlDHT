@@ -35,14 +35,24 @@ void setup() {
 
 void loop() {
   // Buttonwork
-  if (!digitalRead(autoButton) && dhtMode)  automatic = true;  delay(300);
-  if (!digitalRead(upButton))   fanSpeed++; automatic = false; delay(300);
-  if (!digitalRead(downButton)) fanSpeed--; automatic = false; delay(300);
+  if (!digitalRead(autoButton)) {
+    automatic = true;
+    delay(300);
+  }
+  if (!digitalRead(upButton)) {
+    fanSpeed++;
+    automatic = false;
+    delay(300);
+  }
+  if (!digitalRead(downButton)) {
+    fanSpeed--;
+    automatic = false;
+    delay(300);
+  }
   if (fanSpeed>5)  fanSpeed = 5;
-  if (fanSpeed<1)  fanSpeed = 1;
+  if (fanSpeed<0)  fanSpeed = 0;
   if (automatic) {
-    if (!digitalRead(autoButton)) automatic = false; delay(300);
-    //temp = (int)dht.readTemperature();
+    temp = (int)dht.readTemperature();
     if      (temp <= 23) fanSpeed = 1;
     else if (temp <= 26) fanSpeed = 2;
     else if (temp <  29) fanSpeed = 3;
